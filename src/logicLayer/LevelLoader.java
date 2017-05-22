@@ -132,5 +132,9 @@ public class LevelLoader {
 			return null;
 		}
 	}
+
+	public Vector<Cell[][]> get_levels() {
+		return _levels;
+	}
     
 }
