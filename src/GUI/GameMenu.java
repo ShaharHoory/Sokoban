@@ -33,6 +33,9 @@ public class GameMenu extends JPanel implements ActionListener{
 		initializeMenu(window);
 		initializeLevelSelect();
 		
+		_levelSelect.setFocusable(false);
+		_levelSelect.setRequestFocusEnabled(false);
+		
 	}
 	
 	public LevelLoader getLevelLoader() {
@@ -49,6 +52,8 @@ public class GameMenu extends JPanel implements ActionListener{
 	}
 	
 	private void addButton(JButton button) {
+		button.setFocusable(false);
+		button.setRequestFocusEnabled(false);
 		_buttons.put(button.getText(), button);
 		button.setHorizontalAlignment((int) JButton.LEFT_ALIGNMENT);
 		button.setBounds(button.getBounds().x, button.getBounds().y, 50, 200);
@@ -72,7 +77,4 @@ public class GameMenu extends JPanel implements ActionListener{
 		this.add(_levelSelect);
 	}
 	
-	private void allignAllLeft() {
-		
-	}
 }

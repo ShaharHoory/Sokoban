@@ -10,22 +10,20 @@ import javax.swing.*;
 
 public class GameWindow extends JFrame implements ActionListener{
 
-	private JPanel _mainPanel;
-	//private Game _game;
+	private Game _game;
 	
 	public GameWindow() {
 		super("Sokoban");
-
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(new BorderLayout());
-		_mainPanel = new JPanel();
 		GameMenu gameMenu = new GameMenu(this);
-		Game game = new Game((gameMenu.getLevelLoader().get_levels().elementAt(0))); //just a trying
+		_game = new Game((gameMenu.getLevelLoader().get_levels().elementAt(0))); //just a trying
 		this.add(gameMenu, BorderLayout.WEST);
-		this.getContentPane().add(game, BorderLayout.CENTER);
+		this.add(_game, BorderLayout.CENTER);
 		this.setResizable(false); //TODO: make it proportional to every window's size
 		this.setSize(800, 600);
 		this.setVisible(true);
+		this.addKeyListener(_game);
 	}
 	
 	@Override
@@ -34,6 +32,6 @@ public class GameWindow extends JFrame implements ActionListener{
 	}
 
 	public static void main(String[] args) {
-		GameWindow gameWindow = new GameWindow();
+		new GameWindow();
 	}
 }

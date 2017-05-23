@@ -44,6 +44,9 @@ public class Cell {
 	public Boolean hasBox() {
 		return _hasBox;
 	}
+	public Boolean isWall() {
+		return !_isFloor && !_isStorage && !_hasPlayer && !_hasBox;
+	}
 	
 	public void set_isStorage(Boolean _isStorage) {
 		if (!_isFloor) return;
