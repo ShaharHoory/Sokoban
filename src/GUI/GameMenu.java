@@ -18,6 +18,7 @@ public class GameMenu extends JPanel implements ActionListener{
 	private HashMap<String, JButton> _buttons;
 	private JComboBox<Integer> _levelSelect;
 	private LevelLoader _levelLoader;
+
 	
 	public GameMenu(GameWindow window) {
 		super();
@@ -33,6 +34,15 @@ public class GameMenu extends JPanel implements ActionListener{
 		initializeLevelSelect();
 		
 	}
+	
+	public LevelLoader getLevelLoader() {
+		return _levelLoader;
+	}
+	
+	public JComboBox<Integer> getLevelSelect() {
+		return _levelSelect;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
