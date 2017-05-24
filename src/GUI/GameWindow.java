@@ -26,7 +26,7 @@ public class GameWindow extends JFrame implements ActionListener{
 		}
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(new BorderLayout());
-		_gameMenu = new GameMenu(this);
+		_gameMenu = new GameMenu();
 		_game = new Game((_levelLoader.get(_gameMenu._levelSelect.getSelectedIndex())));
 		this.add(_game, BorderLayout.CENTER);
 		this.add(_gameMenu, BorderLayout.WEST);
@@ -44,8 +44,9 @@ public class GameWindow extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {	
-		if (e.getSource() == _gameMenu._buttons.get("Exit"))
-			System.exit(0);
+		//להעיף את ההאשמאפ, ולעשות עם הכפתורים כמו עידו ודן!!!!!!!!!!!!!
+		/* if (e.getSource() == _gameMenu._buttons.va)
+			System.exit(0); */
 			
 		if (e.getSource() == _gameMenu._levelSelect)
 			changeLevel();
