@@ -1,6 +1,8 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,29 +19,13 @@ public class GameMenu extends JPanel implements ActionListener{
 
 	private HashMap<String, JButton> _buttons;
 	private JComboBox<Integer> _levelSelect;
-	private LevelLoader _levelLoader;
-
 	
 	public GameMenu(GameWindow window) {
 		super();
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		_levelLoader = new LevelLoader();
-		try {
-			_levelLoader.load("levels.txt");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		initializeMenu(window);
-		initializeLevelSelect();
+		initializeLevelSelect(window);
 		
-		_levelSelect.setFocusable(false);
-		_levelSelect.setRequestFocusEnabled(false);
-		
-	}
-	
-	public LevelLoader getLevelLoader() {
-		return _levelLoader;
 	}
 	
 	public JComboBox<Integer> getLevelSelect() {
@@ -51,7 +37,12 @@ public class GameMenu extends JPanel implements ActionListener{
 		
 	}
 	
-	private void addButton(JButton button) {
+	private void addButton(String text) {
+		JButton button = new JButton(text);
+		button.setFont(new Font("Tahoma", Font.BOLD, 20));
+		button.setForeground(Color.blue);
+		button.setBackground(Color.WHITE);
+		button.setSize(500,200);
 		button.setFocusable(false);
 		button.setRequestFocusEnabled(false);
 		_buttons.put(button.getText(), button);
@@ -61,20 +52,48 @@ public class GameMenu extends JPanel implements ActionListener{
 	}
 	
 	private void initializeMenu(GameWindow window) {
+		String[] buttonTexts = {"Test Me", "Undo", "Redo", "Reset", "Exit"};
 		_buttons = new HashMap<String, JButton>();
-		addButton(new JButton("Test Me"));
-		addButton(new JButton("Exit"));
-		_buttons.get("Exit").addActionListener(window);
+		for (int i = 0; i<buttonTexts.length; i++)
+			addButton(buttonTexts[i]);
+		_buttons.get("Exit").addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				window.dispose();
+				
+			}
+		});
+		_buttons.get("Reset").addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				window.changeLevel(_levelSelect.getSelectedIndex());		
+			}
+		});
 	}
 
-	private void initializeLevelSelect() {
+	private void initializeLevelSelect(GameWindow window) {
 		_levelSelect = new JComboBox<Integer>();
 		_levelSelect.setAlignmentX(JComboBox.LEFT_ALIGNMENT);
 		_levelSelect.setMaximumSize(getPreferredSize());
-		int levels = _levelLoader.getLevelsCount();
-		for (int i = 0; i<levels; i++)
+		int levels = window.get_levelLoader().getLevelsCount();
+		for (int i = 0; i<levels; i++) {
 			_levelSelect.addItem(new Integer(i));
+		}
 		this.add(_levelSelect);
+		_levelSelect.setFocusable(false);
+		_levelSelect.setRequestFocusEnabled(false);
+		_levelSelect.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int level = _levelSelect.getSelectedIndex();
+				if (level>=0 && level<window.get_levelLoader().getLevelsCount()){
+					window.changeLevel(level);
+				}
+				
+			}
+		});
 	}
 	
 }

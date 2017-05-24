@@ -10,20 +10,29 @@ import javax.swing.*;
 
 public class GameWindow extends JFrame implements ActionListener{
 
+	private LevelLoader _levelLoader;
 	private Game _game;
+	private GameMenu _gameMenu;
 	
 	public GameWindow() {
 		super("Push The Poop!");
+		_levelLoader = new LevelLoader();
+		try {
+			_levelLoader.load("levels.txt");
+			_levelLoader.deepCopyLevels();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(new BorderLayout());
-		GameMenu gameMenu = new GameMenu(this);
-		_game = new Game((gameMenu.getLevelLoader().get_levels().elementAt(3))); //just a trying
-		this.add(gameMenu, BorderLayout.WEST);
-		this.add(_game, BorderLayout.CENTER);
+		_gameMenu = new GameMenu(this);
+		this.add(_gameMenu, BorderLayout.WEST);
+		changeLevel(0);
+		//this.add(_game, BorderLayout.CENTER);
 		this.setResizable(false); //TODO: make it proportional to every window's size
 		this.setSize(800, 600);
 		this.setVisible(true);
-		this.addKeyListener(_game);
 	}
 	
 	@Override
@@ -32,6 +41,25 @@ public class GameWindow extends JFrame implements ActionListener{
 	}
 
 	public static void main(String[] args) {
-		new GameWindow();
+		GameWindow gameWindow = new GameWindow();
+	}
+
+	public LevelLoader get_levelLoader() {
+		return _levelLoader;
+	}
+
+	public Game get_game() {
+		return _game;
+	}
+	
+	public void changeLevel(int level) {
+		System.out.println(level);
+		if (_game!=null)
+			this.getContentPane().remove(_game);
+		this.validate();
+		_game = new Game((_levelLoader.get_initialLevels().elementAt(level))); //just a trying	
+		this.getContentPane().add(_game, BorderLayout.CENTER);
+		this.addKeyListener(_game);
+		this.setVisible(true);
 	}
 }

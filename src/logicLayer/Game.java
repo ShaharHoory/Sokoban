@@ -3,27 +3,37 @@ package logicLayer;
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Stack;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JPanel;
+import GUI.*;
 
 public class Game extends JPanel implements KeyListener{
 	
-	private Board _board;
-	private Stack<Board> _prevSteps;
-	private int _score;
-	
-	
-	public Game(Cell[][] cells) {
-		super(new BorderLayout());
-		_board = new Board(cells);
-		this.add(_board);
-		_prevSteps = new Stack<Board>();
-		_score = 0;
-	}
+		private Board _board;
+		private Stats _stats;
+		
+		
+		public Game(Cell[][] cells) {
+			super(new BorderLayout());
+			_board = new Board(cells);
+			this.add(_board, BorderLayout.SOUTH);
+			_stats = new Stats();
+			this.add(_stats, BorderLayout.WEST);
+			this.setVisible(true);
+		}
+
+
+		public Board get_board() {
+			return _board;
+		}
+
+
+		public Stats get_stats() {
+			return _stats;
+		}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -40,7 +50,7 @@ public class Game extends JPanel implements KeyListener{
 		_board.repaintBoard();
 		_board.setVisible(true);
 		System.out.println("empty targets: " + _board.getNumOfTargets());
-		System.out.println("steps: " + _score);
+		System.out.println("steps: " + _stats.get_score());
 	}
 	
 	private void movePlayer(int toAddX, int toAddY) {
@@ -54,7 +64,7 @@ public class Game extends JPanel implements KeyListener{
 		if (!isLegalMove(currX, currY, toAddX, toAddY))
 			return;
 		
-		_score++;
+		_stats.addPoint();
 		_board.setPlayerLoc(nextLoc); //updates the playerLoc field
 		_board.getCellAt(currX, currY).set_hasPlayer(false); //do that the current cell won't contain a player
 		_board.getCellAt(nextLocX, nextLocY).set_hasPlayer(true); //move the player to the next cell
