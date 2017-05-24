@@ -17,7 +17,7 @@ public class GameWindow extends JFrame implements ActionListener{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(new BorderLayout());
 		GameMenu gameMenu = new GameMenu(this);
-		_game = new Game((gameMenu.getLevelLoader().get_levels().elementAt(3))); //just a trying
+		_game = new Game((gameMenu.getLevelLoader().get_levels().elementAt(1))); //just a trying
 		this.add(gameMenu, BorderLayout.WEST);
 		this.add(_game, BorderLayout.CENTER);
 		this.setResizable(false); //TODO: make it proportional to every window's size
