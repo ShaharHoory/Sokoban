@@ -3,6 +3,7 @@ package logicLayer;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Vector;
 
 public class LevelLoader {
@@ -17,11 +18,19 @@ public class LevelLoader {
 
     /** contains the initial board state of all the levels  */
     private Vector<Cell[][]> _levels;
+    private Vector<Cell[][]> _initialLevels;
     
     public LevelLoader() {
     	_levels = new Vector<>();
+    	_initialLevels = new Vector<>();
 	}
 
+    public void deepCopyLevels() {
+    	for (int i = 0; i<_levels.size(); i++) {
+    		Cell[][] clone = Board.cloneBoard(new Board(get(i)));
+			_initialLevels.add(clone);
+    	}
+    }
     /**
      * Loads all the levels to the internal levels buffer
      * @param levelsFile the name of the file contains the levels
@@ -135,6 +144,10 @@ public class LevelLoader {
 
 	public Vector<Cell[][]> get_levels() {
 		return _levels;
+	}
+
+	public Vector<Cell[][]> get_initialLevels() {
+		return _initialLevels;
 	}
     
 }

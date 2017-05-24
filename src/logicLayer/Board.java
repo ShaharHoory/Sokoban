@@ -27,6 +27,16 @@ public class Board extends JPanel {
 		repaintBoard();
 	}
 	
+	public static Cell[][] cloneBoard(Board other) {
+		Cell[][] clone = new Cell[other.getCells().length][other.getCells()[0].length];
+		for (int i = 0; i<other.getCells().length; i++) {
+			for (int j = 0; j<other.getCells()[i].length; j++) {
+				clone[i][j] = other.getCellAt(i, j).clone();
+			}
+		}
+		return clone;
+	}
+	
 	public Cell getPlayerLoc() {
 		return _playerLoc;
 	}
