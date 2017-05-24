@@ -13,11 +13,11 @@ public class GameWindow extends JFrame implements ActionListener{
 	private Game _game;
 	
 	public GameWindow() {
-		super("Sokoban");
+		super("Push The Poop!");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(new BorderLayout());
 		GameMenu gameMenu = new GameMenu(this);
-		_game = new Game((gameMenu.getLevelLoader().get_levels().elementAt(0))); //just a trying
+		_game = new Game((gameMenu.getLevelLoader().get_levels().elementAt(3))); //just a trying
 		this.add(gameMenu, BorderLayout.WEST);
 		this.add(_game, BorderLayout.CENTER);
 		this.setResizable(false); //TODO: make it proportional to every window's size

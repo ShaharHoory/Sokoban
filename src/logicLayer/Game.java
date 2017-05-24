@@ -5,6 +5,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Stack;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JPanel;
 
 public class Game extends JPanel implements KeyListener{
@@ -37,6 +40,7 @@ public class Game extends JPanel implements KeyListener{
 		_board.repaintBoard();
 		_board.setVisible(true);
 		System.out.println("empty targets: " + _board.getNumOfTargets());
+		System.out.println("steps: " + _score);
 	}
 	
 	private void movePlayer(int toAddX, int toAddY) {
@@ -50,6 +54,7 @@ public class Game extends JPanel implements KeyListener{
 		if (!isLegalMove(currX, currY, toAddX, toAddY))
 			return;
 		
+		_score++;
 		_board.setPlayerLoc(nextLoc); //updates the playerLoc field
 		_board.getCellAt(currX, currY).set_hasPlayer(false); //do that the current cell won't contain a player
 		_board.getCellAt(nextLocX, nextLocY).set_hasPlayer(true); //move the player to the next cell
@@ -66,6 +71,13 @@ public class Game extends JPanel implements KeyListener{
 			if (_board.hasWon()) {
 				//TODO: Do something when winning the game
 				System.out.println("You Won!");
+				try {
+				AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(this.getClass().getResource("win.wav"));
+				    Clip clip = AudioSystem.getClip();
+				    clip.open(audioInputStream);
+				    clip.start();
+				}
+				catch (Exception e) {}
 			}
 	}
 	
