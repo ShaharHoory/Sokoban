@@ -18,21 +18,21 @@ import logicLayer.LevelLoader;
 
 public class GameMenu extends JPanel {
 
-	protected HashMap<String, JButton> _buttons;
 	protected JComboBox<Integer> _levelSelect;
+	protected JButton _exitButton;
+	protected JButton _resetButton;
+	protected JButton _undoButton;
+	protected JButton _redoButton;
 	
-	public GameMenu() { //להעיף את ההאשמאפ, ולעשות עם הכפתורים כמו עידו ודן!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	public GameMenu() {
 		super();
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		LevelLoader lvlLoader = new LevelLoader();
-		initializeLevelSelect(lvlLoader);
-		
-		initializeMenu();
-		
+		initializeLevelSelect(lvlLoader);	
+		initializeMenu();		
 		this.focusDisable();
 	}
 	
-
 	public JComboBox<Integer> getLevelSelect() {
 		return _levelSelect;
 	}
@@ -49,30 +49,14 @@ public class GameMenu extends JPanel {
 	
 	 //initializes the buttons in the menu
 	 private void initializeMenu() {
-		String[] buttonTexts = {"Undo", "Redo", "Reset", "Exit"};
-		_buttons = new HashMap<String, JButton>();
-		for (int i = 0; i<buttonTexts.length; i++)
-			addButton(buttonTexts[i]);
-		
-		/* _buttons.get("Exit").addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				window.dispose();
-				
-			}
-		});
-		_buttons.get("Reset").addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				window.changeLevel(_levelSelect.getSelectedIndex());		
-			}
-		}); */
+		 _exitButton = addButton("Exit");
+		 _resetButton = addButton("Reset");
+		 _undoButton = addButton("Undo");
+		 _redoButton = addButton("Redo");
 	} 
 	 
 	 //adds a button and customizes it
-	 private void addButton(String text) {
+	 private JButton addButton(String text) {
 			JButton button = new JButton(text);
 			button.setFont(new Font("Tahoma", Font.BOLD, 20));
 			button.setForeground(Color.blue);
@@ -80,17 +64,16 @@ public class GameMenu extends JPanel {
 			button.setSize(500,200);
 			button.setFocusable(false);
 			button.setRequestFocusEnabled(false);
-			_buttons.put(button.getText(), button);
 			button.setHorizontalAlignment((int) JButton.LEFT_ALIGNMENT);
 			button.setBounds(button.getBounds().x, button.getBounds().y, 50, 200);
 			this.add(button);
+			return button;
 		}
 	
 	private void initializeLevelSelect(LevelLoader lvlLoader) {
 		_levelSelect = new JComboBox<Integer>();
 		try {
 			lvlLoader.load("levels.txt");
-			lvlLoader.deepCopyLevels();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,6 +88,18 @@ public class GameMenu extends JPanel {
 		this.add(chooseLevel);
 		this.add(_levelSelect);
 		this.add(Box.createVerticalStrut(100));
+	}
+	
+	public JButton getButton(String text) {
+		for (int i = 0; i<getComponentCount(); i++) {
+			if (getComponent(i) instanceof JButton) {
+				JButton b = (JButton) getComponent(i);
+				if (b.getText().toLowerCase().equals(text.toLowerCase())) {
+					return b;
+				}
+			}
+		}
+		return null;
 	}
 	
 }

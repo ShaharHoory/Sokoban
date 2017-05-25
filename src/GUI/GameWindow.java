@@ -4,11 +4,13 @@ import logicLayer.*;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 
 import javax.swing.*;
 
-public class GameWindow extends JFrame implements ActionListener{
+public class GameWindow extends JFrame implements ActionListener {
 	
 	private Game _game;
 	private GameMenu _gameMenu;
@@ -19,7 +21,6 @@ public class GameWindow extends JFrame implements ActionListener{
 		_levelLoader = new LevelLoader();
 		try {
 			_levelLoader.load("levels.txt");
-			_levelLoader.deepCopyLevels();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -35,57 +36,36 @@ public class GameWindow extends JFrame implements ActionListener{
 		this.setSize(800, 600);
 		this.setVisible(true);
 		this.addKeyListener(_game);
-		_gameMenu._levelSelect.addActionListener(this);
 		//adds action listener to the buttons
-		for (int i=0; i<_gameMenu._buttons.size(); i++) {
-			_gameMenu._buttons.get(i).addActionListener(this);
-		}
+		this.addActionListeners();
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {	
-		//להעיף את ההאשמאפ, ולעשות עם הכפתורים כמו עידו ודן!!!!!!!!!!!!!
-		/* if (e.getSource() == _gameMenu._buttons.va)
-			System.exit(0); */
-			
+		if (e.getSource() == _gameMenu._exitButton)
+			this.dispose();		
 		if (e.getSource() == _gameMenu._levelSelect)
 			changeLevel();
+		if (e.getSource() == _gameMenu._resetButton)
+			changeLevel();
+		if (e.getSource() == _gameMenu._undoButton)
+			_game.undo();
+		if (e.getSource() == _gameMenu._redoButton)
+			_game.redo();
 	}
 
-	public static void main(String[] args) {
-		new GameWindow();
+	private void addActionListeners() {
+		_gameMenu._levelSelect.addActionListener(this);
+		_gameMenu._exitButton.addActionListener(this);
+		_gameMenu._resetButton.addActionListener(this);
+		_gameMenu._undoButton.addActionListener(this);
+		_gameMenu._redoButton.addActionListener(this);
 	}
-
-	public LevelLoader get_levelLoader() {
-		return _levelLoader;
-	}
-
-	public Game get_game() {
-		return _game;
-	}
-	
-	/* public void changeLevel(int level) {
-		System.out.println(level);
-		if (_game!=null)
-			this.getContentPane().remove(_game);
-		//this.validate();
-		this.removeKeyListener(_game);
-		_game = new Game((_levelLoader.get_initialLevels().elementAt(level))); //just a trying	
-		_game.get_board().repaintBoard();
-		this.add(_game, BorderLayout.CENTER);
-		this.addKeyListener(_game);
-		this.revalidate();
-		//this.setVisible(true);
-		_game.setVisible(true);
-		this.requestFocus();
-		
-	} */
 	
 	public void changeLevel() {
 		this.getContentPane().remove(_game);
 		try {
 			_levelLoader.load("levels.txt");
-			_levelLoader.deepCopyLevels();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -98,6 +78,19 @@ public class GameWindow extends JFrame implements ActionListener{
 		this.revalidate();
 		_game.setVisible(true);
 		this.requestFocus();
-		
 	}
+	
+	public LevelLoader get_levelLoader() {
+		return _levelLoader;
+	}
+
+	public Game get_game() {
+		return _game;
+	}
+
+
+	public static void main(String[] args) {
+		new GameWindow();
+	}
+
 }
