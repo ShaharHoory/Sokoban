@@ -23,10 +23,11 @@ public class GameMenu extends JPanel {
 	protected JButton _resetButton;
 	protected JButton _undoButton;
 	protected JButton _redoButton;
+	protected JButton _pauseButton;
 	
 	public GameMenu() {
 		super();
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		LevelLoader lvlLoader = new LevelLoader();
 		initializeLevelSelect(lvlLoader);	
 		initializeMenu();		
@@ -49,23 +50,28 @@ public class GameMenu extends JPanel {
 	
 	 //initializes the buttons in the menu
 	 private void initializeMenu() {
-		 _exitButton = addButton("Exit");
+		 this.setMaximumSize(new Dimension(800,GameMenu.HEIGHT));
+		 this.setSize(getMaximumSize());
+		 _pauseButton = addButton("Pause");
 		 _resetButton = addButton("Reset");
 		 _undoButton = addButton("Undo");
 		 _redoButton = addButton("Redo");
+		 _exitButton = addButton("Exit");
 	} 
 	 
 	 //adds a button and customizes it
 	 private JButton addButton(String text) {
 			JButton button = new JButton(text);
-			button.setFont(new Font("Tahoma", Font.BOLD, 20));
+			button.setFont(new Font("Tahoma", Font.BOLD, 14));
 			button.setForeground(Color.blue);
 			button.setBackground(Color.WHITE);
-			button.setSize(500,200);
+			button.setMaximumSize(new Dimension(400, 50));
+			button.setMinimumSize(getMaximumSize());
 			button.setFocusable(false);
 			button.setRequestFocusEnabled(false);
 			button.setHorizontalAlignment((int) JButton.LEFT_ALIGNMENT);
-			button.setBounds(button.getBounds().x, button.getBounds().y, 50, 200);
+			//button.setBounds(button.getBounds().x, button.getBounds().y, 50, 200);
+			button.setVisible(true);
 			this.add(button);
 			return button;
 		}
@@ -84,7 +90,7 @@ public class GameMenu extends JPanel {
 
 		JLabel chooseLevel = new JLabel("Choose a level: ");
 		_levelSelect.setMaximumSize(new Dimension(100, 50));
-		
+		_levelSelect.setBounds(50, 50, getWidth(), getHeight());
 		this.add(chooseLevel);
 		this.add(_levelSelect);
 		this.add(Box.createVerticalStrut(100));

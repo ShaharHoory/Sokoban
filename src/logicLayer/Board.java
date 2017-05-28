@@ -1,5 +1,6 @@
 package logicLayer;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.ImageIcon;
@@ -13,6 +14,7 @@ public class Board extends JPanel {
 	private int _numOfTargets;
 	private Cell _playerLoc;
 	private JLabel[][] sprites;
+
 
 	public Board(Cell[][] cells) {
 		_cells = cells;
@@ -133,6 +135,22 @@ public class Board extends JPanel {
 		if (!isInBoard(x, y))
 			return null;
 		return _cells[x][y];
+	}
+
+	public Cell[][] get_cells() {
+		return _cells;
+	}
+
+	public int get_numOfTargets() {
+		return _numOfTargets;
+	}
+
+	public Cell get_playerLoc() {
+		return _playerLoc;
+	}
+
+	public JLabel[][] getSprites() {
+		return sprites;
 	}
 
 }

@@ -2,6 +2,7 @@ package GUI;
 
 import logicLayer.*;
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -15,6 +16,7 @@ public class GameWindow extends JFrame implements ActionListener {
 	private Game _game;
 	private GameMenu _gameMenu;
 	private LevelLoader _levelLoader;
+	private JLabel _pause;
 	
 	public GameWindow() {
 		super("Push The Poop!");
@@ -32,6 +34,9 @@ public class GameWindow extends JFrame implements ActionListener {
 		this.add(_game, BorderLayout.CENTER);
 		this.add(_gameMenu, BorderLayout.WEST);
 		this.pack();
+		_pause = new JLabel("Paused");
+		_pause.setFont(new Font("Tahoma", Font.BOLD, 24));
+		_pause.setVisible(false);
 		this.setResizable(false); //TODO: make it proportional to every window's size
 		this.setSize(800, 600);
 		this.setVisible(true);
@@ -52,6 +57,18 @@ public class GameWindow extends JFrame implements ActionListener {
 			_game.undo();
 		if (e.getSource() == _gameMenu._redoButton)
 			_game.redo();
+		if (e.getSource() == _gameMenu._pauseButton) {
+			if (_game.isPaused()) {
+				_game.unpause();
+				_pause.setVisible(false);
+				_gameMenu._pauseButton.setText("Pause");
+			}
+			else {
+				_game.pause();
+				_pause.setVisible(true);
+				_gameMenu._pauseButton.setText("Unpause");
+			}
+		}
 	}
 
 	private void addActionListeners() {
@@ -60,6 +77,7 @@ public class GameWindow extends JFrame implements ActionListener {
 		_gameMenu._resetButton.addActionListener(this);
 		_gameMenu._undoButton.addActionListener(this);
 		_gameMenu._redoButton.addActionListener(this);
+		_gameMenu._pauseButton.addActionListener(this);
 	}
 	
 	public void changeLevel() {
@@ -77,6 +95,7 @@ public class GameWindow extends JFrame implements ActionListener {
 		this.addKeyListener(_game);
 		this.revalidate();
 		_game.setVisible(true);
+		_gameMenu._pauseButton.setText("Pause");
 		this.requestFocus();
 	}
 	
