@@ -55,7 +55,7 @@ public class Board extends JPanel {
 		_playerLoc = playerLoc;
 	}
 	
-	//increases/decreases number of empty tatgets by 1
+	//increases/decreases number of empty targets by 1
 	public void decreaseNumOfTargets() {
 		_numOfTargets--;
 	}

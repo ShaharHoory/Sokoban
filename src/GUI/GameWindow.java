@@ -58,6 +58,8 @@ public class GameWindow extends JFrame implements ActionListener {
 		if (e.getSource() == _gameMenu._redoButton)
 			_game.redo();
 		if (e.getSource() == _gameMenu._pauseButton) {
+			if (_game.getHasWon())
+				return;
 			if (_game.isPaused()) {
 				_game.unpause();
 				_pause.setVisible(false);
