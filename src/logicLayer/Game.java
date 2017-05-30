@@ -23,18 +23,14 @@ public class Game extends JPanel implements KeyListener {
 	private Stack<Board> _actionsRedo;
 	private boolean _isPaused;
 	private boolean _hasWon;
-	private JLabel _pauseMsg;
-
+	
 	public Game(Cell[][] cells) {
 		super(new BorderLayout());
 		_board = new Board(cells);		
 		this.add(_board, BorderLayout.SOUTH);
 		_stats = new Stats();
 		this.add(_stats, BorderLayout.NORTH);
-		_pauseMsg = new JLabel("Pause");
-		_pauseMsg.setFont(new Font("Tahoma", Font.BOLD, 24));
 		revalidate();
-		_pauseMsg.setVisible(false);
 		_actionsUndo = new Stack<Board>();
 		_actionsRedo = new Stack<Board>();
 		_isPaused = false;
@@ -67,7 +63,10 @@ public class Game extends JPanel implements KeyListener {
 				redo();
 				break;
 			case KeyEvent.VK_P:
-				pause();
+				if (_isPaused)
+					unpause();
+				else
+					pause();
 				break;
 			default:
 				break;
@@ -86,7 +85,7 @@ public class Game extends JPanel implements KeyListener {
 				clip.start();
 			} catch (Exception ex) {
 			}
-			
+			_stats.get_stopwatch().set_isPaused(true);
 			JOptionPane.showMessageDialog(this, "You Won!" + '\n'+ "press RESET to start over");
 			_isPaused = true;
 		}
@@ -214,16 +213,17 @@ public class Game extends JPanel implements KeyListener {
 
 	//pauses the game
 	public void pause() {
-		_pauseMsg.setVisible(true);
 		revalidate();
 		_isPaused = true;
+		_stats.get_stopwatch().set_isPaused(true);
+	
 	}
 
 	//unpauses the game
 	public void unpause() {
-		_pauseMsg.setVisible(false);
 		revalidate();
 		_isPaused = false;
+		_stats.get_stopwatch().set_isPaused(false);
 	}
 	
 	//exits the program in order to the user's choice
