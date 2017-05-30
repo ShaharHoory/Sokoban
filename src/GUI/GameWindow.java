@@ -67,15 +67,8 @@ public class GameWindow extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == _gameMenu._exitButton) {
 			_game.pause();
-			String ObjButtons[] = { "Yes", "No" };
-			int PromptResult = JOptionPane.showOptionDialog(_game, "Are you sure you want to exit?",
-					"Online Examination System", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
-					ObjButtons, ObjButtons[1]);
-			if (PromptResult == JOptionPane.YES_OPTION) {
-				System.exit(0);
-			}
-			else
-				_game.unpause();
+			_game.exit(this);
+			_game.unpause();
 		}
 		if (e.getSource() == _gameMenu._levelSelect)
 			changeLevel();
