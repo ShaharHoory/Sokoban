@@ -2,6 +2,7 @@ package logicLayer;
 
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -92,8 +93,8 @@ public class Board extends JPanel {
 		for (int i = 0; i < _cells.length; i++)
 			for (int j=0; j < _cells[0].length; j++) {
 				 if (_cells[i][j].isEmptyFloor() && !(_cells[i][j].isStorage())) { //emptyFloor
-					sprites[i][j].setIcon(new ImageIcon("sprites/emptyFloor2.png"));
-					this.add(sprites[i][j]);
+					 sprites[i][j].setIcon(new ImageIcon("sprites/emptyFloor2.png"));
+					 this.add(sprites[i][j]);
 				}
 				else if (_cells[i][j].hasPlayer()) { //player
 					_playerLoc = _cells[i][j];

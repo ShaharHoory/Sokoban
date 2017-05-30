@@ -44,7 +44,7 @@ public class Game extends JPanel implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (_hasWon)
+		if (_hasWon || _isPaused)
 			return;
 		else {
 			switch (e.getKeyCode()) {
@@ -163,6 +163,14 @@ public class Game extends JPanel implements KeyListener {
 
 	//updates the game according to the last command
 	public void undo() {
+		if (_hasWon) {
+			JOptionPane.showMessageDialog(this, "You've Won, why to undo it? ;)");
+			return;
+		}
+		if (_isPaused) {
+			JOptionPane.showMessageDialog(this, "The game is paused");
+			return;
+		}
 		if (!_actionsUndo.isEmpty()) {
 			_actionsRedo.push(_board);
 			_board = _actionsUndo.pop();
@@ -176,6 +184,14 @@ public class Game extends JPanel implements KeyListener {
 
 	//updates the game according to redo command
 	public void redo() {
+		if (_hasWon) {
+			JOptionPane.showMessageDialog(this, "You've Won");
+			return;
+		}
+		if (_isPaused) {
+			JOptionPane.showMessageDialog(this, "The game is paused");
+			return;
+		}
 		if (!_actionsRedo.isEmpty()) {
 			_actionsUndo.push(_board);
 			_board = _actionsRedo.pop();
@@ -185,6 +201,15 @@ public class Game extends JPanel implements KeyListener {
 			_board.setVisible(true);
 			_stats.addPoint();
 		}
+	}
+	
+	//resets the current level
+	public void reset(GameWindow wind) {
+		if (_isPaused && !_hasWon) {
+			JOptionPane.showMessageDialog(this, "The game is paused");
+			return;
+		}
+		wind.changeLevel();
 	}
 
 	//pauses the game
@@ -200,6 +225,16 @@ public class Game extends JPanel implements KeyListener {
 		revalidate();
 		_isPaused = false;
 	}
+	
+	//exits the program in order to the user's choice
+	public void exit(GameWindow wind) {
+		int exit =  JOptionPane.showConfirmDialog(null, "Are you sure?", "Exit", JOptionPane.YES_NO_OPTION);
+		if (exit == JOptionPane.YES_OPTION)
+	           wind.dispose();
+	    else if (exit == JOptionPane.NO_OPTION)
+	           return;
+	}
+	
 	public Stack<Board> get_actionsUndo() {
 		return _actionsUndo;
 	}

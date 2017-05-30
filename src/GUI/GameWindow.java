@@ -43,23 +43,27 @@ public class GameWindow extends JFrame implements ActionListener {
 		this.addKeyListener(_game);
 		//adds action listener to the buttons
 		this.addActionListeners();
+		//this.pack();
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {	
 		if (e.getSource() == _gameMenu._exitButton)
-			this.dispose();		
+			// this.dispose();	
+			_game.exit(this);
 		if (e.getSource() == _gameMenu._levelSelect)
 			changeLevel();
 		if (e.getSource() == _gameMenu._resetButton)
-			changeLevel();
+			_game.reset(this);
 		if (e.getSource() == _gameMenu._undoButton)
 			_game.undo();
 		if (e.getSource() == _gameMenu._redoButton)
 			_game.redo();
 		if (e.getSource() == _gameMenu._pauseButton) {
-			if (_game.getHasWon())
+			if (_game.getHasWon()) {
+				JOptionPane.showMessageDialog(this, "You've Won");
 				return;
+			}
 			if (_game.isPaused()) {
 				_game.unpause();
 				_pause.setVisible(false);
