@@ -37,7 +37,6 @@ public class Stats extends JPanel implements ActionListener  {
 		Timer t = new Timer(1000, this);
 		t.addActionListener(_stopwatch);
 		t.start();
-		//this.setBackground(Color.WHITE);
 	}
 
 	public int get_score() {
