@@ -216,23 +216,36 @@ public class Game extends JPanel implements KeyListener {
 		revalidate();
 		_isPaused = true;
 		_stats.get_stopwatch().set_isPaused(true);
-	
+		String ObjButtons[] = { "Unpause" };
+		int PromptResult = JOptionPane.showOptionDialog(this, "Press unpause to continue",
+				"The game is now paused", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+				ObjButtons, ObjButtons[0]);
+		if (PromptResult == JOptionPane.DEFAULT_OPTION || PromptResult == JOptionPane.OK_OPTION) 
+			unpause();			
 	}
 
 	//unpauses the game
-	public void unpause() {
+	private void unpause() {
 		revalidate();
 		_isPaused = false;
 		_stats.get_stopwatch().set_isPaused(false);
 	}
 	
 	//exits the program in order to the user's choice
-	public void exit(GameWindow wind) {
-		int exit =  JOptionPane.showConfirmDialog(null, "Are you sure?", "Exit", JOptionPane.YES_NO_OPTION);
-		if (exit == JOptionPane.YES_OPTION)
-	           wind.dispose();
-	    else if (exit == JOptionPane.NO_OPTION)
-	           return;
+	public void exit() {
+		_isPaused = true;
+		_stats.get_stopwatch().set_isPaused(true);
+		String ObjButtons[] = { "Yes", "No" };
+		int PromptResult = JOptionPane.showOptionDialog(this, "Are you sure you want to exit?",
+				"Online Examination System", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+				ObjButtons, ObjButtons[1]);
+		if (PromptResult == JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}
+		else {
+			_isPaused = false;
+			_stats.get_stopwatch().set_isPaused(false);
+		}
 	}
 	
 	public Stack<Board> get_actionsUndo() {

@@ -35,16 +35,7 @@ public class GameWindow extends JFrame implements ActionListener {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent we) {
-				_game.pause();
-				String ObjButtons[] = { "Yes", "No" };
-				int PromptResult = JOptionPane.showOptionDialog(_game, "Are you sure you want to exit?",
-						"Online Examination System", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
-						ObjButtons, ObjButtons[1]);
-				if (PromptResult == JOptionPane.YES_OPTION) {
-					System.exit(0);
-				}
-				else
-					_game.unpause();
+				_game.exit();
 			}
 		});
 		this.getContentPane().setLayout(new BorderLayout());
@@ -65,11 +56,8 @@ public class GameWindow extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == _gameMenu._exitButton) {
-			_game.pause();
-			_game.exit(this);
-			_game.unpause();
-		}
+		if (e.getSource() == _gameMenu._exitButton)
+			_game.exit();
 		if (e.getSource() == _gameMenu._levelSelect)
 			changeLevel();
 		if (e.getSource() == _gameMenu._resetButton)
@@ -83,19 +71,8 @@ public class GameWindow extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "You've Won");
 				return;
 			}
-			if (_game.isPaused()) {
-				_game.unpause();
-				_gameMenu._pauseButton.setText("Pause");
-			}
-			else {
-				_game.pause();
-				String ObjButtons[] = { "Unpause" };
-				int PromptResult = JOptionPane.showOptionDialog(_game, "Press unpause to continue",
-						"The game is now paused", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
-						ObjButtons, ObjButtons[0]);
-				if (PromptResult == JOptionPane.DEFAULT_OPTION || PromptResult == JOptionPane.OK_OPTION) 
-					_game.unpause();			
-			}
+			else
+				_game.pause();		
 		}
 	}
 
