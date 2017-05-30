@@ -68,6 +68,8 @@ public class Game extends JPanel implements KeyListener {
 				else
 					pause();
 				break;
+			case KeyEvent.VK_ESCAPE:
+				exit();
 			default:
 				break;
 			}

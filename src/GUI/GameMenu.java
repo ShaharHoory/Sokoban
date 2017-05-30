@@ -25,27 +25,29 @@ public class GameMenu extends JPanel {
 	protected JButton _redoButton;
 	protected JButton _pauseButton;
 	
-	public GameMenu() {
+	public GameMenu(JComboBox<Integer> levelSelect) {
 		super();
+		_levelSelect = levelSelect;
+		JLabel chooseLevel = new JLabel("Choose a level: ");
+		this.add(chooseLevel);
+		chooseLevel.setVisible(true);
+		this.add(_levelSelect);
+		_levelSelect.setVisible(true);
+		_levelSelect.setBounds(50, 50, getWidth(), getHeight());
+		this.add(Box.createVerticalStrut(100));
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		LevelLoader lvlLoader = new LevelLoader();
-		initializeLevelSelect(lvlLoader);	
 		initializeMenu();		
 		this.focusDisable();
+		this.revalidate();
 	}
 	
 	public JComboBox<Integer> getLevelSelect() {
 		return _levelSelect;
 	}
 	
-	/* @Override
-	public void actionPerformed(ActionEvent e) {
-	} */
-	
 	private void focusDisable() {
 		_levelSelect.setFocusable(false);
 		_levelSelect.setRequestFocusEnabled(false);
-		
 	}
 	
 	 //initializes the buttons in the menu
@@ -70,31 +72,11 @@ public class GameMenu extends JPanel {
 			button.setFocusable(false);
 			button.setRequestFocusEnabled(false);
 			button.setHorizontalAlignment((int) JButton.LEFT_ALIGNMENT);
-			//button.setBounds(button.getBounds().x, button.getBounds().y, 50, 200);
+			button.setBounds(button.getBounds().x, button.getBounds().y, 50, 200);
 			button.setVisible(true);
 			this.add(button);
 			return button;
 		}
-	
-	private void initializeLevelSelect(LevelLoader lvlLoader) {
-		_levelSelect = new JComboBox<Integer>();
-		try {
-			lvlLoader.load("levels.txt");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		for (int i = 0; i<lvlLoader.getLevelsCount(); i++)
-			_levelSelect.addItem(i);
-
-		JLabel chooseLevel = new JLabel("Choose a level: ");
-		_levelSelect.setMaximumSize(new Dimension(100, 50));
-		_levelSelect.setBounds(50, 50, getWidth(), getHeight());
-		this.add(chooseLevel);
-		this.add(_levelSelect);
-		this.add(Box.createVerticalStrut(100));
-	}
 	
 	public JButton getButton(String text) {
 		for (int i = 0; i<getComponentCount(); i++) {
