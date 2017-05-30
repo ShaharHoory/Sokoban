@@ -25,11 +25,12 @@ public class GameMenu extends JPanel {
 	protected JButton _redoButton;
 	protected JButton _pauseButton;
 	
-	public GameMenu() {
+	public GameMenu(JComboBox<Integer> levelSelect) {
 		super();
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		LevelLoader lvlLoader = new LevelLoader();
 		initializeLevelSelect(lvlLoader);	
+		_levelSelect.setSelectedIndex(levelSelect.getSelectedIndex());
 		initializeMenu();		
 		this.focusDisable();
 	}
