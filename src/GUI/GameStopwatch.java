@@ -2,9 +2,6 @@ package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
-import javax.swing.JFrame;
-import javax.swing.Timer;
 
 public class GameStopwatch implements ActionListener {
 

@@ -2,13 +2,9 @@ package GUI;
 
 import logicLayer.*;
 import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -18,6 +14,7 @@ import javax.swing.*;
 public class GameWindow extends JFrame implements ActionListener {
 
 	private Game _game;
+	private WelcomeMenu _welcomeMenu;
 	private GameMenu _gameMenu;
 	private LevelLoader _levelLoader;
 
@@ -30,50 +27,97 @@ public class GameWindow extends JFrame implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.setResizable(false); // TODO: make it proportional to every window's size
+		this.setVisible(true);
+		this.getContentPane().setLayout(new BorderLayout());
+		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.setPreferredSize(new Dimension(300,200));
+		_welcomeMenu = new WelcomeMenu(_levelLoader);
+		this.add(_welcomeMenu, BorderLayout.CENTER);
+		this.pack();
+		_welcomeMenu.setVisible(true);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent we) {
-				_game.exit();
+				if (_game == null)
+					_welcomeMenu.exit();
+				else
+					_game.exit();
 			}
 		});
-		this.getContentPane().setLayout(new BorderLayout());
-		_gameMenu = new GameMenu();
-		_game = new Game((_levelLoader.get(_gameMenu._levelSelect.getSelectedIndex())));
-		this.add(_game, BorderLayout.CENTER);
-		this.add(_gameMenu, BorderLayout.WEST);
-		this.pack();
-		this.setResizable(false);
-		this.setSize(800, 650);
-		this.setVisible(true);
-		this.addKeyListener(_game);
-		// adds action listener to the buttons
-		this.addActionListeners();
+
+		this.addWelcomeMenuActionListeners();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == _gameMenu._exitButton)
-			_game.exit();
-		if (e.getSource() == _gameMenu._levelSelect)
-			changeLevel();
-		if (e.getSource() == _gameMenu._resetButton)
-			_game.reset(this);
-		if (e.getSource() == _gameMenu._undoButton)
-			_game.undo();
-		if (e.getSource() == _gameMenu._redoButton)
-			_game.redo();
-		if (e.getSource() == _gameMenu._pauseButton) {
-			if (_game.getHasWon()) {
-				JOptionPane.showMessageDialog(this, "You've Won");
-				return;
+		if (_welcomeMenu!=null && _game==null && _gameMenu == null) {
+			if (e.getSource() == _welcomeMenu._exitButton) {
+				_welcomeMenu.exit();
 			}
-			else
-				_game.pause();		
+			if (e.getSource() == _welcomeMenu._startButton)
+				playGame();
+			if (e.getSource() == _welcomeMenu._playButton) {
+				_welcomeMenu._playButton.setVisible(false);
+				_welcomeMenu._exitButton.setVisible(false);
+				_welcomeMenu._startButton.setVisible(true);
+				_welcomeMenu._backButton.setVisible(true);
+				_welcomeMenu._levelSelect.setVisible(true);
+				_welcomeMenu._chooseLevel.setVisible(true);
+			}
+			if (e.getSource() == _welcomeMenu._backButton) {
+				_welcomeMenu._chooseLevel.setVisible(false);
+				_welcomeMenu._levelSelect.setVisible(false);
+				_welcomeMenu._backButton.setVisible(false);
+				_welcomeMenu._startButton.setVisible(false);
+				_welcomeMenu._playButton.setVisible(true);
+				_welcomeMenu._exitButton.setVisible(true);
+			}
+		}
+		else {
+			if (e.getSource() == _gameMenu._exitButton)
+				_game.exit();
+			if (e.getSource() == _gameMenu._levelSelect)
+				changeLevel();
+			if (e.getSource() == _gameMenu._resetButton)
+				_game.reset(this);	
+			if (e.getSource() == _gameMenu._undoButton)
+				_game.undo();
+			if (e.getSource() == _gameMenu._redoButton)
+				_game.redo();
+			if (e.getSource() == _gameMenu._pauseButton) {
+				if (_game.getHasWon()) {
+					JOptionPane.showMessageDialog(this, "You've Won");
+					return;
+				}
+				else
+					_game.pause();		
+			}
 		}
 	}
 
-	private void addActionListeners() {
+	public void playGame() {
+		this.setSize(800, 650);
+		this.getContentPane().remove(_welcomeMenu);
+		_gameMenu = new GameMenu(_welcomeMenu._levelSelect); 
+		_game = new Game((_levelLoader.get(_gameMenu._levelSelect.getSelectedIndex())));
+		this.add(_game, BorderLayout.CENTER);
+		this.add(_gameMenu, BorderLayout.WEST);
+		this.addKeyListener(_game);
+		this.addGameActionListeners();
+	}
+	
+	// adds action listener to the buttons in the welcome menu
+	public void addWelcomeMenuActionListeners() {
+		_welcomeMenu._startButton.addActionListener(this);
+		_welcomeMenu._exitButton.addActionListener(this);
+		_welcomeMenu._playButton.addActionListener(this);
+		_welcomeMenu._backButton.addActionListener(this);
+	}
+	
+	// adds action listener to the buttons
+	private void addGameActionListeners() {
 		_gameMenu._levelSelect.addActionListener(this);
 		_gameMenu._exitButton.addActionListener(this);
 		_gameMenu._resetButton.addActionListener(this);

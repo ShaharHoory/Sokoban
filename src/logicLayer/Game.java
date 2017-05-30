@@ -1,8 +1,6 @@
 package logicLayer;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Stack;
@@ -10,9 +8,7 @@ import java.util.Stack;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 import GUI.*;
 
 public class Game extends JPanel implements KeyListener {
@@ -27,7 +23,7 @@ public class Game extends JPanel implements KeyListener {
 	public Game(Cell[][] cells) {
 		super(new BorderLayout());
 		_board = new Board(cells);		
-		this.add(_board, BorderLayout.SOUTH);
+		this.add(_board, BorderLayout.CENTER);
 		_stats = new Stats();
 		this.add(_stats, BorderLayout.NORTH);
 		revalidate();
@@ -63,10 +59,7 @@ public class Game extends JPanel implements KeyListener {
 				redo();
 				break;
 			case KeyEvent.VK_P:
-				if (_isPaused)
-					unpause();
-				else
-					pause();
+				pause();
 				break;
 			default:
 				break;
@@ -174,7 +167,7 @@ public class Game extends JPanel implements KeyListener {
 		if (!_actionsUndo.isEmpty()) {
 			_actionsRedo.push(_board);
 			_board = _actionsUndo.pop();
-			add(_board, BorderLayout.SOUTH);
+			add(_board, BorderLayout.CENTER);
 			revalidate();
 			_board.repaintBoard();
 			_board.setVisible(true);
@@ -195,7 +188,7 @@ public class Game extends JPanel implements KeyListener {
 		if (!_actionsRedo.isEmpty()) {
 			_actionsUndo.push(_board);
 			_board = _actionsRedo.pop();
-			add(_board, BorderLayout.SOUTH);
+			add(_board, BorderLayout.CENTER);
 			revalidate();
 			_board.repaintBoard();
 			_board.setVisible(true);

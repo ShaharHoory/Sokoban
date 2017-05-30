@@ -1,11 +1,7 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.TextArea;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -20,12 +16,10 @@ public class Stats extends JPanel implements ActionListener  {
 	private JLabel _time;
 	private int _points;
 	private GameStopwatch _stopwatch;
-	private Stack<Board> _prevSteps;
 	
 	public Stats() {
 		super();
 		_points = 0;
-		_prevSteps = new Stack<Board>();
 		this.setLayout(new FlowLayout());
 		_score = initializeScore();
 		//_score.setHorizontalAlignment(FlowLayout.LEFT);
@@ -59,14 +53,14 @@ public class Stats extends JPanel implements ActionListener  {
 	
 	private JLabel initializeScore() {
 		_points = 0;
-		JLabel score = new JLabel("Score : " + _points + ", ");
-		score.setFont(new Font("Times New Roman", Font.BOLD, 18));	
+		JLabel score = new JLabel("Score : " + _points + " , ");
+		score.setFont(new Font("Times New Roman", Font.BOLD, 20));	
 		return score;
 	}
 	
 	private JLabel initializeStopwatch() {
-		JLabel time = new JLabel("Time : " + _stopwatch.get_mins() + " Minutes , " + _stopwatch.get_secs() + " Seconds");
-		time.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		JLabel time = new JLabel(" Time : " + _stopwatch.get_mins() + " Minutes , " + _stopwatch.get_secs() + " Seconds");
+		time.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		return time;
 	}
 
@@ -74,12 +68,8 @@ public class Stats extends JPanel implements ActionListener  {
 		return _points;
 	}
 
-	public Stack<Board> get_prevSteps() {
-		return _prevSteps;
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		_time.setText("Time : " + _stopwatch.get_mins() + " Minutes , " + _stopwatch.get_secs() + " Seconds");
+		_time.setText(" Time : " + _stopwatch.get_mins() + " Minutes , " + _stopwatch.get_secs() + " Seconds");
 	}
 }

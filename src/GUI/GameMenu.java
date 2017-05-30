@@ -12,9 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-
-import logicLayer.LevelLoader;
+import logicLayer.*;
 
 public class GameMenu extends JPanel {
 
@@ -25,11 +23,12 @@ public class GameMenu extends JPanel {
 	protected JButton _redoButton;
 	protected JButton _pauseButton;
 	
-	public GameMenu() {
+	public GameMenu(JComboBox<Integer> levelSelect) {
 		super();
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		LevelLoader lvlLoader = new LevelLoader();
 		initializeLevelSelect(lvlLoader);	
+		_levelSelect.setSelectedIndex(levelSelect.getSelectedIndex());
 		initializeMenu();		
 		this.focusDisable();
 	}
@@ -52,20 +51,20 @@ public class GameMenu extends JPanel {
 	 private void initializeMenu() {
 		 this.setMaximumSize(new Dimension(800,GameMenu.HEIGHT));
 		 this.setSize(getMaximumSize());
-		 _pauseButton = addButton("Pause");
+		 _pauseButton = addButton("Pause (P)");
 		 _resetButton = addButton("Reset");
-		 _undoButton = addButton("Undo");
-		 _redoButton = addButton("Redo");
+		 _undoButton = addButton("Undo (Z)");
+		 _redoButton = addButton("Redo (X)");
 		 _exitButton = addButton("Exit");
 	} 
 	 
 	 //adds a button and customizes it
 	 private JButton addButton(String text) {
 			JButton button = new JButton(text);
-			button.setFont(new Font("Tahoma", Font.BOLD, 14));
-			button.setForeground(Color.blue);
+			button.setFont(new Font("Tahoma", Font.BOLD, 20));
+			button.setForeground(new Color(88, 44, 0));
 			button.setBackground(Color.WHITE);
-			button.setMaximumSize(new Dimension(400, 50));
+			button.setMaximumSize(new Dimension(300, 50));
 			button.setMinimumSize(getMaximumSize());
 			button.setFocusable(false);
 			button.setRequestFocusEnabled(false);
@@ -90,10 +89,11 @@ public class GameMenu extends JPanel {
 
 		JLabel chooseLevel = new JLabel("Choose a level: ");
 		_levelSelect.setMaximumSize(new Dimension(100, 50));
-		_levelSelect.setBounds(50, 50, getWidth(), getHeight());
+		_levelSelect.setAlignmentX(CENTER_ALIGNMENT);
+		chooseLevel.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(chooseLevel);
 		this.add(_levelSelect);
-		this.add(Box.createVerticalStrut(100));
+		this.add(Box.createVerticalStrut(50));
 	}
 	
 	public JButton getButton(String text) {
