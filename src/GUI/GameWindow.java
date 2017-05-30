@@ -30,7 +30,6 @@ public class GameWindow extends JFrame implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -44,14 +43,12 @@ public class GameWindow extends JFrame implements ActionListener {
 		this.add(_game, BorderLayout.CENTER);
 		this.add(_gameMenu, BorderLayout.WEST);
 		this.pack();
-		this.setResizable(false); // TODO: make it proportional to every
-									// window's size
-		this.setSize(800, 600);
+		this.setResizable(false);
+		this.setSize(800, 650);
 		this.setVisible(true);
 		this.addKeyListener(_game);
 		// adds action listener to the buttons
 		this.addActionListeners();
-		//this.pack();
 	}
 
 	@Override

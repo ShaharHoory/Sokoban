@@ -1,8 +1,12 @@
 package logicLayer;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -15,16 +19,20 @@ public class Board extends JPanel {
 	private int _numOfTargets;
 	private Cell _playerLoc;
 	private JLabel[][] sprites;
-
+	private GridBagConstraints _gbc;
 
 	public Board(Cell[][] cells) {
+		
+		super(new GridBagLayout());
+		_gbc = new GridBagConstraints();
+		_gbc.insets = new Insets(0, 0, 0, 0);
+		_gbc.weightx = 0;
+		_gbc.weighty = 0;
+		_gbc.fill = GridBagConstraints.BOTH;
+		
 		_cells = cells;
-		GridLayout gl = new GridLayout(cells.length, cells[0].length); // TODO: check if cells[0].length is ok
 		sprites = new JLabel[cells.length][cells[0].length];
 		spritesInitiaion();
-		gl.setHgap(-265);
-		gl.setVgap(-5);
-		this.setLayout(gl);
 		_numOfTargets = 0;
 		countTargets();
 		repaintBoard();
@@ -64,7 +72,8 @@ public class Board extends JPanel {
 		_numOfTargets++;
 	}
 	
-	private void spritesInitiaion() { //initialize a label in every cell
+	//initialize a label in every cell
+	private void spritesInitiaion() {
 		for (int i = 0; i < sprites.length; i++) {
 			for (int j = 0; j < sprites[i].length; j++) {
 				sprites[i][j] = new JLabel();
@@ -85,16 +94,19 @@ public class Board extends JPanel {
 	public boolean hasWon() {
 		return _numOfTargets == 0;
 	}
-
 	
-	//repaints the board
+	/* //repaints the board
 	public void repaintBoard() { 
 		ImageIcon icon;
+		JLabel lbl;
 		for (int i = 0; i < _cells.length; i++)
 			for (int j=0; j < _cells[0].length; j++) {
 				 if (_cells[i][j].isEmptyFloor() && !(_cells[i][j].isStorage())) { //emptyFloor
-					 sprites[i][j].setIcon(new ImageIcon("sprites/emptyFloor2.png"));
-					 this.add(sprites[i][j]);
+					 //sprites[i][j].setIcon(new ImageIcon("sprites/emptyFloor2.png"));
+					 //this.add(sprites[i][j]);
+					 lbl = new JLabel(new ImageIcon("sprites/emptyFloor2.png"));
+					 sprites[i][j] = lbl;
+					 add(lbl, _gbc);
 				}
 				else if (_cells[i][j].hasPlayer()) { //player
 					_playerLoc = _cells[i][j];
@@ -124,7 +136,70 @@ public class Board extends JPanel {
 					this.add(sprites[i][j]);
 				}
 			}
-	}
+	}*/
+	
+	//repaints the board
+		public void repaintBoard() { 
+			//JLabel lbl;
+			for (int i = 0; i < _cells.length; i++) {
+				_gbc.gridy = i;
+				for (int j=0; j < _cells[0].length; j++) {
+					_gbc.gridx = j;
+					 if (_cells[i][j].isEmptyFloor() && !(_cells[i][j].isStorage())) { //emptyFloor
+						 /* lbl = new JLabel(new ImageIcon("sprites/emptyFloor2.png"));
+						 sprites[i][j] = lbl;
+						 add(sprites[i][j], _gbc); */
+						 sprites[i][j].setIcon(new ImageIcon("sprites/emptyFloor2.png"));
+						 this.add(sprites[i][j], _gbc);
+					}
+					else if (_cells[i][j].hasPlayer()) { //player
+						_playerLoc = _cells[i][j];
+						if (_cells[i][j].isStorage()) {
+							/* lbl = new JLabel(new ImageIcon("sprites/cleanerOnToilet.png"));
+							sprites[i][j] = lbl;
+							add(sprites[i][j], _gbc); */
+							sprites[i][j].setIcon(new ImageIcon("sprites/cleanerOnToilet.png"));
+							 this.add(sprites[i][j], _gbc);
+						}
+						else {
+							/* lbl = new JLabel(new ImageIcon("sprites/cleaner.png"));
+							sprites[i][j] = lbl;
+							add(sprites[i][j], _gbc); */
+							sprites[i][j].setIcon(new ImageIcon("sprites/cleaner.png"));
+							 this.add(sprites[i][j], _gbc);
+						}
+					}
+					else if(_cells[i][j].isStorage() && !(_cells[i][j].hasBox())) { //target
+						/* lbl = new JLabel(new ImageIcon("sprites/ToiletTargetReSized.png"));
+						sprites[i][j] = lbl;
+						add(sprites[i][j], _gbc); */
+						sprites[i][j].setIcon(new ImageIcon("sprites/ToiletTargetReSized.png"));
+						 this.add(sprites[i][j], _gbc);
+					}
+					else if (!(_cells[i][j].isStorage()) && _cells[i][j].hasBox()) { //box
+						/*lbl = new JLabel(new ImageIcon("sprites/poopTransparent.png"));
+						sprites[i][j] = lbl;
+						add(sprites[i][j], _gbc);*/
+						sprites[i][j].setIcon(new ImageIcon("sprites/poopTransparent.png"));
+						 this.add(sprites[i][j], _gbc);
+					}
+					else if (_cells[i][j].isStorage() && _cells[i][j].hasBox()) { //box in target
+						/*lbl = new JLabel(new ImageIcon("sprites/closedToiletsWithPoop2.png"));
+						sprites[i][j] = lbl;
+						add(sprites[i][j], _gbc);*/
+						sprites[i][j].setIcon(new ImageIcon("sprites/closedToiletsWithPoop2.png"));
+						 this.add(sprites[i][j], _gbc);
+					}
+					else { //wall
+						/* lbl = new JLabel(new ImageIcon("sprites/wallRound.png"));
+						sprites[i][j] = lbl;
+						add(sprites[i][j], _gbc); */
+						sprites[i][j].setIcon(new ImageIcon("sprites/wallRound.png"));
+						 this.add(sprites[i][j], _gbc);
+					}
+				}
+			}
+		}
 
 	// returns true if (x,y) is in the game board
 	public boolean isInBoard(int x, int y) {

@@ -139,7 +139,8 @@ public class Game extends JPanel implements KeyListener {
 		}
 	}
 
-	private boolean isLegalMove(int currX, int currY, int toAddX, int toAddY) { // returns true if the new movement is legal
+	// returns true if the new movement is legal
+	private boolean isLegalMove(int currX, int currY, int toAddX, int toAddY) {
 		if (!(_board.isInBoard(currX + toAddX, currY + toAddY)))
 			return false;
 		if (_board.getCells()[currX + toAddX][currY + toAddY].isWall()) // wall
@@ -237,7 +238,7 @@ public class Game extends JPanel implements KeyListener {
 		_stats.get_stopwatch().set_isPaused(true);
 		String ObjButtons[] = { "Yes", "No" };
 		int PromptResult = JOptionPane.showOptionDialog(this, "Are you sure you want to exit?",
-				"Online Examination System", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+				"Exit", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
 				ObjButtons, ObjButtons[1]);
 		if (PromptResult == JOptionPane.YES_OPTION) {
 			System.exit(0);

@@ -37,7 +37,7 @@ public class Stats extends JPanel implements ActionListener  {
 		Timer t = new Timer(1000, this);
 		t.addActionListener(_stopwatch);
 		t.start();
-		this.setBackground(Color.WHITE);
+		//this.setBackground(Color.WHITE);
 	}
 
 	public int get_score() {
@@ -46,12 +46,12 @@ public class Stats extends JPanel implements ActionListener  {
 	
 	public void addPoint() {
 		_points++;
-		_score.setText("Score : " + _points);
+		_score.setText("Score : " + _points + ", ");
 	}
 
 	public void removePoint() {
 		_points--;
-		_score.setText("Score : " + _points);
+		_score.setText("Score : " + _points + ", ");
 	}
 	
 	public GameStopwatch get_stopwatch() {
@@ -60,7 +60,7 @@ public class Stats extends JPanel implements ActionListener  {
 	
 	private JLabel initializeScore() {
 		_points = 0;
-		JLabel score = new JLabel("Score : " + _points);
+		JLabel score = new JLabel("Score : " + _points + ", ");
 		score.setFont(new Font("Times New Roman", Font.BOLD, 18));	
 		return score;
 	}
