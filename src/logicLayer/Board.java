@@ -95,105 +95,40 @@ public class Board extends JPanel {
 		return _numOfTargets == 0;
 	}
 	
-	/* //repaints the board
-	public void repaintBoard() { 
-		ImageIcon icon;
-		JLabel lbl;
-		for (int i = 0; i < _cells.length; i++)
-			for (int j=0; j < _cells[0].length; j++) {
-				 if (_cells[i][j].isEmptyFloor() && !(_cells[i][j].isStorage())) { //emptyFloor
-					 //sprites[i][j].setIcon(new ImageIcon("sprites/emptyFloor2.png"));
-					 //this.add(sprites[i][j]);
-					 lbl = new JLabel(new ImageIcon("sprites/emptyFloor2.png"));
-					 sprites[i][j] = lbl;
-					 add(lbl, _gbc);
-				}
-				else if (_cells[i][j].hasPlayer()) { //player
-					_playerLoc = _cells[i][j];
-					if (_cells[i][j].isStorage()) {
-						sprites[i][j].setIcon(new ImageIcon("sprites/cleanerOnToilet.png"));
-						this.add(sprites[i][j]);
-					}
-					else {
-					sprites[i][j].setIcon(new ImageIcon("sprites/cleaner.png"));
-					this.add(sprites[i][j]);
-					}
-				}
-				else if(_cells[i][j].isStorage() && !(_cells[i][j].hasBox())) { //target
-					sprites[i][j].setIcon(new ImageIcon("sprites/ToiletTargetReSized.png"));
-					this.add(sprites[i][j]);
-				}
-				else if (!(_cells[i][j].isStorage()) && _cells[i][j].hasBox()) { //box
-					sprites[i][j].setIcon(new ImageIcon("sprites/poopTransparent.png"));
-					this.add(sprites[i][j]);
-				}
-				else if (_cells[i][j].isStorage() && _cells[i][j].hasBox()) { //box in target
-					sprites[i][j].setIcon(new ImageIcon("sprites/closedToiletsWithPoop2.png"));
-					this.add(sprites[i][j]);
-				}
-				else { //wall
-					sprites[i][j].setIcon(new ImageIcon("sprites/wallRound.png"));
-					this.add(sprites[i][j]);
-				}
-			}
-	}*/
-	
 	//repaints the board
 		public void repaintBoard() { 
-			//JLabel lbl;
 			for (int i = 0; i < _cells.length; i++) {
 				_gbc.gridy = i;
 				for (int j=0; j < _cells[0].length; j++) {
 					_gbc.gridx = j;
 					 if (_cells[i][j].isEmptyFloor() && !(_cells[i][j].isStorage())) { //emptyFloor
-						 /* lbl = new JLabel(new ImageIcon("sprites/emptyFloor2.png"));
-						 sprites[i][j] = lbl;
-						 add(sprites[i][j], _gbc); */
 						 sprites[i][j].setIcon(new ImageIcon("sprites/emptyFloor2.png"));
 						 this.add(sprites[i][j], _gbc);
 					}
 					else if (_cells[i][j].hasPlayer()) { //player
 						_playerLoc = _cells[i][j];
 						if (_cells[i][j].isStorage()) {
-							/* lbl = new JLabel(new ImageIcon("sprites/cleanerOnToilet.png"));
-							sprites[i][j] = lbl;
-							add(sprites[i][j], _gbc); */
 							sprites[i][j].setIcon(new ImageIcon("sprites/cleanerOnToilet.png"));
 							 this.add(sprites[i][j], _gbc);
 						}
 						else {
-							/* lbl = new JLabel(new ImageIcon("sprites/cleaner.png"));
-							sprites[i][j] = lbl;
-							add(sprites[i][j], _gbc); */
 							sprites[i][j].setIcon(new ImageIcon("sprites/cleaner.png"));
 							 this.add(sprites[i][j], _gbc);
 						}
 					}
 					else if(_cells[i][j].isStorage() && !(_cells[i][j].hasBox())) { //target
-						/* lbl = new JLabel(new ImageIcon("sprites/ToiletTargetReSized.png"));
-						sprites[i][j] = lbl;
-						add(sprites[i][j], _gbc); */
 						sprites[i][j].setIcon(new ImageIcon("sprites/ToiletTargetReSized.png"));
 						 this.add(sprites[i][j], _gbc);
 					}
 					else if (!(_cells[i][j].isStorage()) && _cells[i][j].hasBox()) { //box
-						/*lbl = new JLabel(new ImageIcon("sprites/poopTransparent.png"));
-						sprites[i][j] = lbl;
-						add(sprites[i][j], _gbc);*/
 						sprites[i][j].setIcon(new ImageIcon("sprites/poopTransparent.png"));
 						 this.add(sprites[i][j], _gbc);
 					}
 					else if (_cells[i][j].isStorage() && _cells[i][j].hasBox()) { //box in target
-						/*lbl = new JLabel(new ImageIcon("sprites/closedToiletsWithPoop2.png"));
-						sprites[i][j] = lbl;
-						add(sprites[i][j], _gbc);*/
 						sprites[i][j].setIcon(new ImageIcon("sprites/closedToiletsWithPoop2.png"));
 						 this.add(sprites[i][j], _gbc);
 					}
 					else { //wall
-						/* lbl = new JLabel(new ImageIcon("sprites/wallRound.png"));
-						sprites[i][j] = lbl;
-						add(sprites[i][j], _gbc); */
 						sprites[i][j].setIcon(new ImageIcon("sprites/wallRound.png"));
 						 this.add(sprites[i][j], _gbc);
 					}

@@ -27,12 +27,11 @@ public class GameWindow extends JFrame implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.setResizable(false); // TODO: make it proportional to every window's size
+		this.setResizable(false);
 		this.setVisible(true);
 		this.getContentPane().setLayout(new BorderLayout());
-		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.setPreferredSize(new Dimension(300,200));
+		this.setPreferredSize(new Dimension(400,290));
 		_welcomeMenu = new WelcomeMenu(_levelLoader);
 		this.add(_welcomeMenu, BorderLayout.CENTER);
 		this.pack();
@@ -97,6 +96,7 @@ public class GameWindow extends JFrame implements ActionListener {
 		}
 	}
 
+	//initializes the game
 	public void playGame() {
 		this.setSize(new Dimension(800,650));
 		this.getContentPane().remove(_welcomeMenu);
@@ -126,6 +126,7 @@ public class GameWindow extends JFrame implements ActionListener {
 		_gameMenu._pauseButton.addActionListener(this);
 	}
 
+	//changes the level according to the combo-box
 	public void changeLevel() {
 		this.getContentPane().remove(_game);
 		try {

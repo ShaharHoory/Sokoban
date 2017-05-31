@@ -4,8 +4,10 @@ import logicLayer.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class WelcomeMenu extends JPanel {
@@ -19,18 +21,31 @@ public class WelcomeMenu extends JPanel {
 	
 	public WelcomeMenu(LevelLoader lvlLoader) {
 		super();
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		JLabel headline = new JLabel("Push The Poop!");
-		headline.setAlignmentX(CENTER_ALIGNMENT);
-		headline.setHorizontalAlignment(SwingConstants.CENTER);
-		headline.setFont(new Font("Tahoma", Font.BOLD, 26));
-		this.add(headline);
+		
+		//להוסיף תמונת רקע ולדחוף לגיט
+		
+		
+		
+		
+		//this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(null);
+		//JLabel headline = new JLabel("Push The Poop!");
+		//headline.setAlignmentX(CENTER_ALIGNMENT);
+		//headline.setHorizontalAlignment(SwingConstants.CENTER);
+		//headline.setFont(new Font("Tahoma", Font.BOLD, 26));
+		//this.add(headline);
 		initializeLevelSelect(lvlLoader);	
 		initializeButtons();
 		this.focusDisable();
 		this.setVisible(true);
 		//this.revalidate();
+		
+		ImageIcon icon = new ImageIcon("sprites/welcomeMenu.png");
+		JLabel background = new JLabel(icon);
+		background.setBounds(0, 0, 400, 290);
+		this.add(background);
 	}
+	
 	
 	private void focusDisable() {
 		_levelSelect.setFocusable(false);
@@ -38,15 +53,15 @@ public class WelcomeMenu extends JPanel {
 	}
 	
 	private void initializeButtons() {
-		_playButton = addButton("Play");
-		_exitButton = addButton("Exit");
-		_startButton = addButton("Start");
-		_backButton = addButton("Back");
+		_playButton = addButton("Play", 157, 100);
+		_exitButton = addButton("Exit", 157, 140);
+		_startButton = addButton("Start", 157, 140);
+		_backButton = addButton("Back", 157, 180);
 		_startButton.setVisible(false);
 		_backButton.setVisible(false);
 	}
 	
-	 private JButton addButton(String text) {
+	 private JButton addButton(String text, int x, int y) {
 			JButton button = new JButton(text);
 			button.setFont(new Font("Tahoma", Font.BOLD, 14));
 			button.setForeground(new Color(88, 44, 0));
@@ -57,7 +72,8 @@ public class WelcomeMenu extends JPanel {
 			button.setVisible(true);
 			button.setAlignmentX(CENTER_ALIGNMENT);
 			button.setAlignmentY(CENTER_ALIGNMENT);
-			this.add(button, BorderLayout.CENTER);
+			button.setBounds(x, y, 70, 35);
+			this.add(button);
 			this.revalidate();
 			return button;
 		}
@@ -78,10 +94,16 @@ public class WelcomeMenu extends JPanel {
 		_chooseLevel = new JLabel("Choose a level: ");
 		_chooseLevel.setAlignmentX(CENTER_ALIGNMENT);
 		_chooseLevel.setAlignmentY(CENTER_ALIGNMENT);
+		
+		_chooseLevel.setBounds(157, 70, 150, 40);
+		
 		this.add(_chooseLevel);
 		_chooseLevel.setVisible(false);
 		_levelSelect.setAlignmentX(CENTER_ALIGNMENT);
 		_levelSelect.setAlignmentY(CENTER_ALIGNMENT);
+		
+		_levelSelect.setBounds(157, 100, 70, 30);
+		
 		this.add(_levelSelect);
 		_levelSelect.setVisible(false);
 		focusDisable();
