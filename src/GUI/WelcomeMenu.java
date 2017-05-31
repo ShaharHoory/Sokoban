@@ -21,26 +21,13 @@ public class WelcomeMenu extends JPanel {
 	
 	public WelcomeMenu(LevelLoader lvlLoader) {
 		super();
-		
-		//להוסיף תמונת רקע ולדחוף לגיט
-		
-		
-		
-		
-		//this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setLayout(null);
-		//JLabel headline = new JLabel("Push The Poop!");
-		//headline.setAlignmentX(CENTER_ALIGNMENT);
-		//headline.setHorizontalAlignment(SwingConstants.CENTER);
-		//headline.setFont(new Font("Tahoma", Font.BOLD, 26));
-		//this.add(headline);
 		initializeLevelSelect(lvlLoader);	
 		initializeButtons();
 		this.focusDisable();
 		this.setVisible(true);
-		//this.revalidate();
-		
-		ImageIcon icon = new ImageIcon("sprites/welcomeMenu.png");
+		//background image:
+		ImageIcon icon = new ImageIcon("sprites/welcomeMenu2.png");
 		JLabel background = new JLabel(icon);
 		background.setBounds(0, 0, 400, 290);
 		this.add(background);
@@ -52,6 +39,7 @@ public class WelcomeMenu extends JPanel {
 		_levelSelect.setRequestFocusEnabled(false);
 	}
 	
+	//initializes all the buttons
 	private void initializeButtons() {
 		_playButton = addButton("Play", 157, 100);
 		_exitButton = addButton("Exit", 157, 140);
@@ -61,6 +49,7 @@ public class WelcomeMenu extends JPanel {
 		_backButton.setVisible(false);
 	}
 	
+	//creates a button
 	 private JButton addButton(String text, int x, int y) {
 			JButton button = new JButton(text);
 			button.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -78,6 +67,7 @@ public class WelcomeMenu extends JPanel {
 			return button;
 		}
 	
+	 //initializes the combo-box of level select
 	private void initializeLevelSelect(LevelLoader lvlLoader) {
 		_levelSelect = new JComboBox<Integer>();
 		try {
@@ -109,6 +99,7 @@ public class WelcomeMenu extends JPanel {
 		focusDisable();
 	}
 	
+	//exits the program according to the user's choise
 	public void exit() {
 		String ObjButtons[] = { "Yes", "No" };
 		int PromptResult = JOptionPane.showOptionDialog(this, "Are you sure you want to exit?",
