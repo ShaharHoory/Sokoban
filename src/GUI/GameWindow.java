@@ -98,7 +98,7 @@ public class GameWindow extends JFrame implements ActionListener {
 	}
 
 	public void playGame() {
-		this.setSize(800, 650);
+		this.setSize(new Dimension(800,650));
 		this.getContentPane().remove(_welcomeMenu);
 		_gameMenu = new GameMenu(_welcomeMenu._levelSelect); 
 		_game = new Game((_levelLoader.get(_gameMenu._levelSelect.getSelectedIndex())));
@@ -141,7 +141,6 @@ public class GameWindow extends JFrame implements ActionListener {
 		this.addKeyListener(_game);
 		this.revalidate();
 		_game.setVisible(true);
-		_gameMenu._pauseButton.setText("Pause");
 		this.requestFocus();
 	}
 

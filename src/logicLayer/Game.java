@@ -212,7 +212,7 @@ public class Game extends JPanel implements KeyListener {
 		_stats.get_stopwatch().set_isPaused(true);
 		String ObjButtons[] = { "Unpause" };
 		int PromptResult = JOptionPane.showOptionDialog(this, "Press unpause to continue",
-				"The game is now paused", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+				"The game is now paused", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
 				ObjButtons, ObjButtons[0]);
 		if (PromptResult == JOptionPane.DEFAULT_OPTION || PromptResult == JOptionPane.OK_OPTION) 
 			unpause();			

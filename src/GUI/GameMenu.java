@@ -49,7 +49,7 @@ public class GameMenu extends JPanel {
 	
 	 //initializes the buttons in the menu
 	 private void initializeMenu() {
-		 this.setMaximumSize(new Dimension(800,GameMenu.HEIGHT));
+		 //this.setMaximumSize(new Dimension(800,GameMenu.HEIGHT));
 		 this.setSize(getMaximumSize());
 		 _pauseButton = addButton("Pause (P)");
 		 _resetButton = addButton("Reset");
