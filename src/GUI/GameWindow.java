@@ -101,7 +101,7 @@ public class GameWindow extends JFrame implements ActionListener {
 		this.setSize(new Dimension(800,650));
 		this.getContentPane().remove(_welcomeMenu);
 		_gameMenu = new GameMenu(_welcomeMenu._levelSelect); 
-		_game = new Game((_levelLoader.get(_gameMenu._levelSelect.getSelectedIndex())));
+		_game = new Game((_levelLoader.get(_gameMenu._levelSelect.getSelectedIndex())));		
 		this.add(_game, BorderLayout.CENTER);
 		this.add(_gameMenu, BorderLayout.WEST);
 		this.addKeyListener(_game);

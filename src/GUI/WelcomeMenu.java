@@ -85,14 +85,14 @@ public class WelcomeMenu extends JPanel {
 		_chooseLevel.setAlignmentX(CENTER_ALIGNMENT);
 		_chooseLevel.setAlignmentY(CENTER_ALIGNMENT);
 		
-		_chooseLevel.setBounds(157, 70, 150, 40);
+		_chooseLevel.setBounds(157, 49, 150, 40);
 		
 		this.add(_chooseLevel);
 		_chooseLevel.setVisible(false);
 		_levelSelect.setAlignmentX(CENTER_ALIGNMENT);
 		_levelSelect.setAlignmentY(CENTER_ALIGNMENT);
 		
-		_levelSelect.setBounds(157, 100, 70, 30);
+		_levelSelect.setBounds(157, 77, 70, 30);
 		
 		this.add(_levelSelect);
 		_levelSelect.setVisible(false);

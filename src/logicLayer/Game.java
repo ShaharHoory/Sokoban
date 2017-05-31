@@ -24,6 +24,12 @@ public class Game extends JPanel implements KeyListener {
 		super(new BorderLayout());
 		_board = new Board(cells);		
 		this.add(_board, BorderLayout.CENTER);
+		
+		//adding scroll pane to the board
+		JScrollPane scrollPane = new JScrollPane(_board);
+		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+		this.add(scrollPane);
+		
 		_stats = new Stats();
 		this.add(_stats, BorderLayout.NORTH);
 		revalidate();
